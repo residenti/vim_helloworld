@@ -1,13 +1,14 @@
 "
-"必要になったタイミングで読み込まれるスクリプトファイル.
+" vim起動時に呼ばれるスクリプトファイル.
 " plugin以下のスクリプトでは、関数呼び出し処理を書く.
 "
 
 " vimのスクリプトファイルが指定したエンコーディングで読み込まれることを保証.
 scriptencoding utf-8
 
-" 読み込み制御用の変数が定義済みなら処理を抜ける.
-if exists('g:loaded_helloworld')
+" 読み込み制御用の変数が未定義なら、
+" plugin以下のスクリプトが読み込まれていないと判断できるため処理を抜ける.
+if !exists('g:loaded_helloworld')
   finish
 endif
 
@@ -17,7 +18,9 @@ let g:loaded_helloworld = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-nnoremap z :call helloworld#helloworld()<CR>
+function! helloworld#helloworld()
+  echo "Hello World!"
+endfunction
 
 " 退避していたユーザ設定を戻す.
 let &cpo = s:save_cpo
